@@ -1,5 +1,5 @@
 import chalk, { Chalk } from 'chalk';
-import dayjs from './day';
+import dayjs from '@utils/day';
 import { LoggerService, LogLevel } from '@nestjs/common';
 
 export class Logger implements LoggerService {
