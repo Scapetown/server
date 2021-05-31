@@ -14,6 +14,8 @@
     "paths": {
       "@utils/*": ["./src/utils/*"],
       "@config/*": ["./src/config/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@filters/*": ["./src/filters/*"],
     },
   }
 }
