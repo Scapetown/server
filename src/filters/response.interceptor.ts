@@ -11,7 +11,6 @@ import dayjs from '@utils/day';
 
 export interface Response {
   code: number;
-  message: string;
   data: any;
 }
 
@@ -25,7 +24,6 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, Response> {
       map((data) => ({
         timestamp: dayjs().format(),
         code: context.switchToHttp().getResponse().statusCode,
-        message: data.message,
         data,
       })),
     );
