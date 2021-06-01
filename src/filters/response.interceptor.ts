@@ -7,6 +7,8 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import dayjs from '@utils/day';
+
 export interface Response {
   code: number;
   message: string;
@@ -21,6 +23,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, Response> {
   ): Observable<Response> {
     return next.handle().pipe(
       map((data) => ({
+        timestamp: dayjs().format(),
         code: context.switchToHttp().getResponse().statusCode,
         message: data.message,
         data,
