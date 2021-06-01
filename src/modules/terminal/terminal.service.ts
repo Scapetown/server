@@ -21,7 +21,7 @@ export class TerminalService extends Logger {
     if (game) {
       if (game.ip === ip) {
         return {
-          ip: game.ip,
+          code: game.code,
         };
       }
 
