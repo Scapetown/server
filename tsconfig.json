@@ -17,6 +17,7 @@
       "@config/*": ["./src/config/*"],
       "@modules/*": ["./src/modules/*"],
       "@filters/*": ["./src/filters/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
     },
   }
 }
