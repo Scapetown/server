@@ -4,6 +4,7 @@ import config from '@config/config';
 export class AppService {
   getInfo() {
     return {
+      name: config.server.name,
       author: config.author,
     };
   }
