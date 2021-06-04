@@ -15,7 +15,7 @@ const SERVER = {
 
 const AUTHOR = process.env.AUTHOR;
 
-const GAME_DURATION = parseInt(process.env.GAME_DURATION) || 900000;
+const GAME_DURATION = parseInt(process.env.GAME_DURATION) || 900;
 
 const GAME = {
   duration: GAME_DURATION,
