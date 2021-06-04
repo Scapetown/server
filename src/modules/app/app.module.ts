@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 
 import { AdminModule } from '@modules/admin/admin.module';
 import { TerminalModule } from '@modules/terminal/terminal.module';
-import { IpModule } from '@modules/ip/ip.module';
-import { DoorModule } from '../door/door.module';
+import { DoorModule } from '@modules/door/door.module';
+import { ArdruinoModule } from '@modules/ardruino/ardruino.module';
 
 @Module({
-  imports: [AdminModule, TerminalModule, IpModule, DoorModule],
+  imports: [AdminModule, TerminalModule, DoorModule, ArdruinoModule],
   controllers: [AppController],
   providers: [AppService],
 })
