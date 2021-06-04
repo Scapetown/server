@@ -1,6 +1,7 @@
 import { Module, CacheModule } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AdminController } from './admin.controller';
+import { ArdruinoService } from '@modules/ardruino/ardruino.service';
 
 @Module({
   imports: [
@@ -8,7 +9,7 @@ import { AdminController } from './admin.controller';
       ttl: null,
     }),
   ],
-  providers: [AdminService],
+  providers: [AdminService, ArdruinoService],
   controllers: [AdminController],
 })
 export class AdminModule {}
