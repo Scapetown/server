@@ -37,7 +37,7 @@ export class WebsocketGateway implements OnGatewayInit, OnGatewayConnection, OnG
     }
   }
 
-  sendRemaining(durationInSeconds: number) {
+  sendEvent(durationInSeconds: number) {
     this.broadcast('remaining', durationInSeconds);
   }
 }
