@@ -8,7 +8,7 @@ import { DoorModule } from '@modules/door/door.module';
 import { ArdruinoModule } from '@modules/ardruino/ardruino.module';
 
 @Module({
-  imports: [AdminModule, TerminalModule, DoorModule, ArdruinoModule],
+  imports: [TerminalModule, DoorModule, ArdruinoModule, AdminModule],
   controllers: [AppController],
   providers: [AppService],
 })
