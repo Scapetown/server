@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import {
   WebSocketGateway,
   WebSocketServer,
@@ -8,13 +9,17 @@ import {
 import { Server } from 'socket.io';
 
 @WebSocketGateway()
-export class WebsocketGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+export class WebsocketGateway extends Logger implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  constructor() {
+    super();
+  }
+
   @WebSocketServer()
   private wss: Server;
   clients = [];
 
   public afterInit() {
-    console.log('WS initialized');
+    super.log('wss initialized');
   }
 
   public handleConnection(client: any) {
