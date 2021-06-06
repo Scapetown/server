@@ -24,7 +24,7 @@ export class AdminService extends Logger {
     };
 
     this.cacheManager.set('game', game);
-    this.ardruinoService.showOnLcd(`[Het IP adres is]${game.ip}`); //[ represents the first line, ] represents the secund line
+    this.ardruinoService.showOnLcd(`[het IP adres is]${game.ip}`); //[ represents the first line, ] represents the secund line
 
     super.log('game created');
 
