@@ -2,8 +2,8 @@
   "name": "scapetown-server-2021",
   "version": "0.0.1",
   "description": "",
-  "author": "Martijn Faber",
-  "private": true,
+  "author": "Martijn Faber <martijn@fabtronics.nl> (martijndev.me)",
+  "private": false,
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
