@@ -5,10 +5,16 @@ import { v4 as uuidv4 } from 'uuid';
 import generateIp from '@utils/ip';
 import config from '@config/config';
 import { ArdruinoService } from '@modules/ardruino/ardruino.service';
+import { CountDown } from '@modules/countdown/countdown';
+import { WebsocketGateway } from '@modules/websocket/websocket.gateway';
 
 @Injectable()
 export class AdminService extends Logger {
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache, private ardruinoService: ArdruinoService) {
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private ardruinoService: ArdruinoService,
+    private websocketGateway: WebsocketGateway,
+  ) {
     super();
   }
 
@@ -19,7 +25,9 @@ export class AdminService extends Logger {
       id: uuidv4(),
       ip: generateIp(),
       code: Math.floor(1000 + Math.random() * 9000),
-      time_remaining: config.game.duration,
+      time_remaining: new CountDown(config.game.duration, (duration: number) => {
+        this.websocketGateway.sendRemaining(duration);
+      }),
       running: true,
     };
 
