@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import SerialPort from 'serialport';
 
 @Injectable()
-export class ArdruinoService extends Logger {
+export class LcdService extends Logger {
   private serialport;
 
   constructor() {
@@ -10,7 +10,7 @@ export class ArdruinoService extends Logger {
     this.serialport = new SerialPort('COM4');
   }
 
-  showOnLcd(msg: string) {
+  write(msg: string) {
     this.serialport.write(msg);
   }
 }

@@ -4,7 +4,7 @@ import Game from '@interfaces/game';
 import { v4 as uuidv4 } from 'uuid';
 import generateIp from '@utils/ip';
 import config from '@config/config';
-import { ArdruinoService } from '@modules/ardruino/ardruino.service';
+import { LcdService } from '@modules/lcd/lcd.service';
 import { CountDown } from '@modules/countdown/countdown';
 import { WebsocketGateway } from '@modules/websocket/websocket.gateway';
 
@@ -14,7 +14,7 @@ export class AdminService extends Logger {
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    private ardruinoService: ArdruinoService,
+    private lcdService: LcdService,
     private websocketGateway: WebsocketGateway,
   ) {
     super();
@@ -37,12 +37,14 @@ export class AdminService extends Logger {
     };
 
     this.cacheManager.set('game', this.game);
-    this.ardruinoService.showOnLcd(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
+    this.lcdService.write(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
 
     super.log('game created');
 
     return {
       message: 'game created',
+      code: this.game.code,
+      ip: this.game.ip,
     };
   }
 }

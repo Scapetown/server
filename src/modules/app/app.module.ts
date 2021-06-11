@@ -5,10 +5,12 @@ import { AppService } from './app.service';
 import { AdminModule } from '@modules/admin/admin.module';
 import { TerminalModule } from '@modules/terminal/terminal.module';
 import { DoorModule } from '@modules/door/door.module';
-import { ArdruinoModule } from '@modules/ardruino/ardruino.module';
+import { LcdModule } from '@modules/lcd/lcd.module';
+import { KeypadModule } from '@modules/keypad/keypad.module';
+import { SoundModule } from '@modules/sound/sound.module';
 
 @Module({
-  imports: [TerminalModule, DoorModule, ArdruinoModule, AdminModule],
+  imports: [TerminalModule, DoorModule, LcdModule, AdminModule, KeypadModule, SoundModule],
   controllers: [AppController],
   providers: [AppService],
 })

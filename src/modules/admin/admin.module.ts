@@ -1,7 +1,7 @@
 import { Module, CacheModule } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AdminController } from './admin.controller';
-import { ArdruinoModule } from '@modules/ardruino/ardruino.module';
+import { LcdModule } from '@modules/lcd/lcd.module';
 import { WebsocketModule } from '@modules/websocket/websocket.module';
 
 @Module({
@@ -9,7 +9,7 @@ import { WebsocketModule } from '@modules/websocket/websocket.module';
     CacheModule.register({
       ttl: null,
     }),
-    ArdruinoModule,
+    LcdModule,
     WebsocketModule,
   ],
   providers: [AdminService],
