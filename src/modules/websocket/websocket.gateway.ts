@@ -21,12 +21,12 @@ export class WebsocketGateway extends Logger implements OnGatewayInit, OnGateway
     super.log('wss initialized');
   }
 
-  public handleConnection(client: any) {
-    console.log('new client connected');
+  public handleConnection() {
+    super.log('wss client connected');
   }
 
-  public handleDisconnect(client: any) {
-    console.log('client disconnected');
+  public handleDisconnect() {
+    super.log('wss client disconnected');
   }
 
   sendEvent(durationInSeconds: number) {
