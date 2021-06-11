@@ -13,4 +13,8 @@ export class LcdService extends Logger {
   write(msg: string) {
     this.serialport.write(msg);
   }
+
+  clear() {
+    this.serialport.write('[]');
+  }
 }
