@@ -2,12 +2,17 @@ import { Injectable, CACHE_MANAGER, Inject, Logger } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import Game from '@interfaces/game';
 import { KeypadService } from '@modules/keypad/keypad.service';
+import { LcdService } from '@modules/lcd/lcd.service';
 
 @Injectable()
 export class DoorService extends Logger {
   private doorCode;
 
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache, private keypadService: KeypadService) {
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private keypadService: KeypadService,
+    private lcdService: LcdService,
+  ) {
     super();
     this.doorCode = 0;
 
@@ -33,6 +38,7 @@ export class DoorService extends Logger {
     if (ch === '#') {
       if (game.code === this.doorCode) {
         //open door servo
+        this.lcdService.reset();
       }
       this.doorCode = 0;
     }
