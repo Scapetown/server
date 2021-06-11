@@ -14,7 +14,7 @@ export class LcdService extends Logger {
     this.serialport.write(msg);
   }
 
-  clear() {
-    this.serialport.write('[]');
+  reset() {
+    this.serialport.write("[currently there's]no game running");
   }
 }
