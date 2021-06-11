@@ -1,6 +1,5 @@
 import { Module, CacheModule } from '@nestjs/common';
 import { DoorService } from './door.service';
-// import { DoorController } from './door.controller';
 import { KeypadModule } from '@modules/keypad/keypad.module';
 
 @Module({
@@ -11,6 +10,5 @@ import { KeypadModule } from '@modules/keypad/keypad.module';
     KeypadModule,
   ],
   providers: [DoorService],
-  // controllers: [DoorController],
 })
 export class DoorModule {}
