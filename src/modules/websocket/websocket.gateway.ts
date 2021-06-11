@@ -29,7 +29,7 @@ export class WebsocketGateway extends Logger implements OnGatewayInit, OnGateway
     super.log('wss client disconnected');
   }
 
-  sendEvent(durationInSeconds: number) {
-    this.wss.emit('remaining', { data: durationInSeconds });
+  sendEvent(eventName: string, data: any) {
+    this.wss.emit(eventName, { data: data });
   }
 }

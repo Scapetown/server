@@ -31,7 +31,7 @@ export class AdminService extends Logger {
       ip: generateIp(),
       code: Math.floor(1000 + Math.random() * 9000),
       time_remaining: new CountDown(config.game.duration, (duration: number) => {
-        this.websocketGateway.sendEvent(duration);
+        this.websocketGateway.sendEvent('remaining', duration);
       }),
       running: true,
     };
