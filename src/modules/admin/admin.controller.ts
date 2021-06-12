@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AdminService } from './admin.service';
 
 @Controller('admin')
@@ -8,5 +8,10 @@ export class AdminController {
   @Post('game')
   newGame() {
     return this.adminService.newGame();
+  }
+
+  @Post('hint')
+  sendHint(@Body() body) {
+    return this.adminService.sendHint(body);
   }
 }

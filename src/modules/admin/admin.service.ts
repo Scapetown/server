@@ -7,6 +7,7 @@ import config from '@config/config';
 import { LcdService } from '@modules/lcd/lcd.service';
 import { CountDown } from '@modules/countdown/countdown';
 import { WebsocketGateway } from '@modules/websocket/websocket.gateway';
+import { DoorService } from '@modules/door/door.service';
 
 @Injectable()
 export class AdminService extends Logger {
@@ -16,6 +17,7 @@ export class AdminService extends Logger {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private lcdService: LcdService,
     private websocketGateway: WebsocketGateway,
+    private doorService: DoorService,
   ) {
     super();
   }
@@ -38,6 +40,7 @@ export class AdminService extends Logger {
 
     this.cacheManager.set('game', this.game);
     this.lcdService.write(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
+    this.doorService.close();
 
     super.log('game created');
 
@@ -46,5 +49,11 @@ export class AdminService extends Logger {
       code: this.game.code,
       ip: this.game.ip,
     };
+  }
+
+  sendHint(req) {
+    const { body } = req;
+    this.websocketGateway.sendEvent('hint', body);
+    console.log(body);
   }
 }
