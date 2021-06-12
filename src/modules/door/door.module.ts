@@ -1,7 +1,7 @@
 import { Module, CacheModule } from '@nestjs/common';
 import { DoorService } from './door.service';
 import { ArdruinoDoorModule } from '@modules/ardruinoDoor/ardruinoDoor.module';
-import { LcdModule } from '@modules/lcd/lcd.module';
+import { LogsModule } from '@modules/logs/logs.module';
 
 @Module({
   imports: [
@@ -9,7 +9,7 @@ import { LcdModule } from '@modules/lcd/lcd.module';
       ttl: null,
     }),
     ArdruinoDoorModule,
-    LcdModule,
+    LogsModule,
   ],
   providers: [DoorService],
   exports: [DoorService],
