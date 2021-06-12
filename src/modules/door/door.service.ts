@@ -7,6 +7,7 @@ import { LcdService } from '@modules/lcd/lcd.service';
 @Injectable()
 export class DoorService extends Logger {
   private doorCode;
+  private codeStars;
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -15,6 +16,7 @@ export class DoorService extends Logger {
   ) {
     super();
     this.doorCode = 0;
+    this.codeStars = ']';
 
     this.ardruinoDoorService.registerRead((code: string) => {
       this.checkCode(code);
@@ -33,6 +35,7 @@ export class DoorService extends Logger {
 
     if (ch >= '0' && ch <= '9') {
       this.doorCode = this.doorCode * 10 + parseInt(ch);
+      this.codeStars = this.codeStars + '*';
     }
 
     if (ch === '#') {
@@ -40,15 +43,20 @@ export class DoorService extends Logger {
         super.log('code correct');
         this.ardruinoDoorService.open();
         this.lcdService.reset();
+        this.ardruinoDoorService.write('[door unlocked');
       } else {
         super.log(`code incorrect got: ${this.doorCode} expected: ${game.code}`);
       }
 
+      this.codeStars = ']';
       this.doorCode = 0;
     }
+
+    this.ardruinoDoorService.write(this.codeStars);
   }
 
-  async close() {
+  async onGameStart() {
+    this.ardruinoDoorService.write('[enter code]');
     this.ardruinoDoorService.close();
   }
 }
