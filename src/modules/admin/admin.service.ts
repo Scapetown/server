@@ -1,4 +1,4 @@
-import { Injectable, CACHE_MANAGER, Inject, Logger } from '@nestjs/common';
+import { Injectable, CACHE_MANAGER, Inject, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import Game from '@interfaces/game';
 import { v4 as uuidv4 } from 'uuid';
@@ -53,7 +53,21 @@ export class AdminService extends Logger {
 
   sendHint(req) {
     const { body } = req;
+
+    if (!this.game) {
+      super.log(`there's currently no game running`);
+      throw new HttpException("there's currently no game running", HttpStatus.NOT_FOUND);
+    }
+
+    if (!body) {
+      throw new HttpException('body missing', HttpStatus.BAD_REQUEST);
+    }
+
     this.websocketGateway.sendEvent('hint', body);
-    console.log(body);
+    super.log(`hint sent: '${body}'`);
+
+    return {
+      message: 'ok',
+    };
   }
 }
