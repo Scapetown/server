@@ -36,4 +36,8 @@ export class ArdruinoDoorService extends Logger {
   close() {
     this.serialport.write(')');
   }
+
+  write(msg: string) {
+    this.serialport.write(msg);
+  }
 }
