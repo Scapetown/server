@@ -8,6 +8,12 @@ This is the official server for Scapetown.
 #### What is scapetown?
 Scapetown is one of the largest escape rooms in the world, created by secondary school students. [Learn more](https://jegaathetmaken.nl/scapetown/)
 
+## Required
+
+- typescript
+- nodejs
+
+
 ## Installation
 
 ```bash
