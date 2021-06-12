@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  CACHE_MANAGER,
-  Inject,
-  Logger,
-  HttpException,
-} from '@nestjs/common';
+import { Injectable, CACHE_MANAGER, Inject, Logger, HttpException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import Game from '@interfaces/game';
 
@@ -20,11 +14,13 @@ export class TerminalService extends Logger {
 
     if (game) {
       if (game.ip === ip) {
+        super.log('ip correct');
         return {
           code: game.code,
         };
       }
 
+      super.log(`ip incorrect got: ${ip} expected: ${game.ip}`);
       return {
         message: 'ip incorrect',
       };
