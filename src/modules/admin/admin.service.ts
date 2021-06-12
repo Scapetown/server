@@ -40,7 +40,7 @@ export class AdminService extends Logger {
 
     this.cacheManager.set('game', this.game);
     this.lcdService.write(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
-    this.doorService.close();
+    this.doorService.onGameStart();
 
     super.log('game created');
 
