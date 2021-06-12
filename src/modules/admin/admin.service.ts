@@ -8,6 +8,7 @@ import { LcdService } from '@modules/lcd/lcd.service';
 import { CountDown } from '@modules/countdown/countdown';
 import { WebsocketGateway } from '@modules/websocket/websocket.gateway';
 import { DoorService } from '@modules/door/door.service';
+import { LogsService } from '@modules/logs/logs.service';
 
 @Injectable()
 export class AdminService extends Logger {
@@ -18,6 +19,7 @@ export class AdminService extends Logger {
     private lcdService: LcdService,
     private websocketGateway: WebsocketGateway,
     private doorService: DoorService,
+    private logsService: LogsService,
   ) {
     super();
   }
@@ -42,7 +44,7 @@ export class AdminService extends Logger {
     this.lcdService.write(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
     this.doorService.onGameStart();
 
-    super.log('game created');
+    this.logsService.log('game created');
 
     return {
       message: 'game created',
@@ -64,7 +66,7 @@ export class AdminService extends Logger {
     }
 
     this.websocketGateway.sendEvent('hint', body);
-    super.log(`hint sent: '${body}'`);
+    this.logsService.log(`hint sent: '${body}'`);
 
     return {
       message: 'ok',

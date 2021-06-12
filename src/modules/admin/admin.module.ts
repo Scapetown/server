@@ -4,6 +4,7 @@ import { AdminController } from './admin.controller';
 import { LcdModule } from '@modules/lcd/lcd.module';
 import { WebsocketModule } from '@modules/websocket/websocket.module';
 import { DoorModule } from '@modules/door/door.module';
+import { LogsModule } from '@modules/logs/logs.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { DoorModule } from '@modules/door/door.module';
     LcdModule,
     WebsocketModule,
     DoorModule,
+    LogsModule,
   ],
   providers: [AdminService],
   controllers: [AdminController],
