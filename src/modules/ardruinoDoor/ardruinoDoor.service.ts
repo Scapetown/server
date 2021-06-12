@@ -30,10 +30,10 @@ export class ArdruinoDoorService extends Logger {
   }
 
   open() {
-    this.serialport.write('o');
+    this.serialport.write('(');
   }
 
   close() {
-    this.serialport.write('c');
+    this.serialport.write(')');
   }
 }
