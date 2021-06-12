@@ -1,7 +1,7 @@
 import { Injectable, CACHE_MANAGER, Inject, Logger } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import Game from '@interfaces/game';
-import { KeypadService } from '@modules/keypad/keypad.service';
+import { ArdruinoDoorService } from '@modules/ardruinoDoor/ardruinoDoor.service';
 import { LcdService } from '@modules/lcd/lcd.service';
 
 @Injectable()
@@ -10,13 +10,13 @@ export class DoorService extends Logger {
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    private keypadService: KeypadService,
+    private ardruinoDoorService: ArdruinoDoorService,
     private lcdService: LcdService,
   ) {
     super();
     this.doorCode = 0;
 
-    this.keypadService.registerRead((code: string) => {
+    this.ardruinoDoorService.registerRead((code: string) => {
       this.checkCode(code);
     });
   }
@@ -26,7 +26,7 @@ export class DoorService extends Logger {
     const ch = code[0];
 
     if (!game) {
-      console.log("currently there's no game running");
+      super.log("currently there's no game running");
       this.doorCode = 0;
       return;
     }
@@ -37,10 +37,18 @@ export class DoorService extends Logger {
 
     if (ch === '#') {
       if (game.code === this.doorCode) {
-        //open door servo
+        super.log('code correct');
+        this.ardruinoDoorService.open();
         this.lcdService.reset();
+      } else {
+        super.log(`code incorrect got: ${this.doorCode} expected: ${game.code}`);
       }
+
       this.doorCode = 0;
     }
+  }
+
+  async close() {
+    this.ardruinoDoorService.close();
   }
 }
