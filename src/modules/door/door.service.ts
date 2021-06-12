@@ -7,7 +7,7 @@ import { LcdService } from '@modules/lcd/lcd.service';
 @Injectable()
 export class DoorService extends Logger {
   private doorCode;
-  private codeStars;
+  private codeState;
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -16,11 +16,41 @@ export class DoorService extends Logger {
   ) {
     super();
     this.doorCode = 0;
-    this.codeStars = ']';
+    this.codeState = 0;
+    this.updateLcd();
 
     this.ardruinoDoorService.registerRead((code: string) => {
       this.checkCode(code);
     });
+  }
+
+  updateLcd() {
+    switch (this.codeState) {
+      case 0:
+        this.ardruinoDoorService.write('[no active game');
+        this.ardruinoDoorService.write(']');
+        break;
+      case 1:
+        this.ardruinoDoorService.write('[enter code');
+        this.ardruinoDoorService.write(']@');
+        break;
+      case 2:
+        this.ardruinoDoorService.write(']#');
+        break;
+      case 3:
+        this.ardruinoDoorService.write(']$');
+        break;
+      case 4:
+        this.ardruinoDoorService.write(']%');
+        break;
+      case 5:
+        this.ardruinoDoorService.write(']&');
+        break;
+      case 6:
+        this.ardruinoDoorService.write('[door unlocked');
+        this.ardruinoDoorService.write(']');
+        break;
+    }
   }
 
   async checkCode(code: string) {
@@ -35,28 +65,30 @@ export class DoorService extends Logger {
 
     if (ch >= '0' && ch <= '9') {
       this.doorCode = this.doorCode * 10 + parseInt(ch);
-      this.codeStars = this.codeStars + '*';
+      if (this.codeState <= 4) {
+        this.codeState += 1;
+      }
     }
 
     if (ch === '#') {
       if (game.code === this.doorCode) {
         super.log('code correct');
         this.ardruinoDoorService.open();
-        this.lcdService.reset();
-        this.ardruinoDoorService.write('[door unlocked');
+        this.codeState = 6;
       } else {
         super.log(`code incorrect got: ${this.doorCode} expected: ${game.code}`);
+        this.codeState = 1;
       }
 
-      this.codeStars = ']';
       this.doorCode = 0;
     }
 
-    this.ardruinoDoorService.write(this.codeStars);
+    this.updateLcd();
   }
 
   async onGameStart() {
-    this.ardruinoDoorService.write('[enter code]');
+    this.codeState = 1;
+    this.updateLcd();
     this.ardruinoDoorService.close();
   }
 }
