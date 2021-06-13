@@ -1,6 +1,6 @@
 import { Injectable, CACHE_MANAGER, Inject, Logger } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import Game from '@interfaces/game';
+import { Game } from '@interfaces/game';
 import { ArdruinoDoorService } from '@modules/ardruinoDoor/ardruinoDoor.service';
 import { LogsService } from '@modules/logs/logs.service';
 

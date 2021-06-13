@@ -1,6 +1,6 @@
 import { Injectable, CACHE_MANAGER, Inject, Logger, HttpException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import Game from '@interfaces/game';
+import { Game } from '@interfaces/game';
 import { LogsService } from '@modules/logs/logs.service';
 
 @Injectable()
