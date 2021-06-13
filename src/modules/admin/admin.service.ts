@@ -1,19 +1,16 @@
 import { Injectable, CACHE_MANAGER, Inject, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import { Game } from '@interfaces/game';
-import { v4 as uuidv4 } from 'uuid';
-import generateIp from '@utils/ip';
 import config from '@config/config';
 import { LcdService } from '@modules/lcd/lcd.service';
 import { CountDown } from '@modules/countdown/countdown';
 import { WebsocketGateway } from '@modules/websocket/websocket.gateway';
 import { DoorService } from '@modules/door/door.service';
 import { LogsService } from '@modules/logs/logs.service';
-import getRandomTeamName from '@utils/teams';
-
+import { Game } from '@modules/game/game';
 @Injectable()
 export class AdminService extends Logger {
   private game: Game;
+  private countdown: CountDown;
 
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -23,28 +20,22 @@ export class AdminService extends Logger {
     private logs: LogsService,
   ) {
     super();
+    this.game = new Game();
   }
 
   async newGame() {
-    if (this.game) {
-      this.game.time_remaining.stop();
-      this.cacheManager.del('game');
+    if (this.countdown) {
+      this.countdown.stop();
     }
 
-    this.game = {
-      id: uuidv4(),
-      ip: generateIp(),
-      code: Math.floor(1000 + Math.random() * 9000),
-      team: {
-        name: getRandomTeamName(),
-      },
-      time_remaining: new CountDown(config.game.duration, (duration: number) => {
-        this.websocketGateway.sendEvent('remaining', duration);
-      }),
-      running: true,
-    };
-
+    this.game.newGame();
     this.cacheManager.set('game', this.game);
+
+    this.countdown = new CountDown(this.game.remaining, (duration: number) => {
+      this.game.remaining = duration;
+      this.websocketGateway.sendEvent('remaining', duration);
+    });
+
     this.lcdService.write(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
     this.websocketGateway.sendEvent('team', this.game.team);
     this.doorService.onGameStart();
