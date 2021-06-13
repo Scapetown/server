@@ -14,4 +14,9 @@ export class AdminController {
   sendHint(@Body() body) {
     return this.adminService.sendHint(body);
   }
+
+  @Post('open')
+  openDoor() {
+    return this.adminService.openDoor();
+  }
 }

@@ -85,6 +85,10 @@ export class DoorService extends Logger {
     this.updateLcd();
   }
 
+  openDoor() {
+    this.ardruinoDoorService.open();
+  }
+
   async onGameStart() {
     this.codeState = 1;
     this.updateLcd();

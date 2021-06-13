@@ -57,7 +57,6 @@ export class AdminService extends Logger {
     const { body } = req;
 
     if (!this.game) {
-      super.log(`there's currently no game running`);
       throw new HttpException("there's currently no game running", HttpStatus.NOT_FOUND);
     }
 
@@ -71,5 +70,13 @@ export class AdminService extends Logger {
     return {
       message: 'ok',
     };
+  }
+
+  openDoor() {
+    if (!this.game) {
+      throw new HttpException("there's currently no game running", HttpStatus.NOT_FOUND);
+    }
+
+    this.doorService.openDoor();
   }
 }
