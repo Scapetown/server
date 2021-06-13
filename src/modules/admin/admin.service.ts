@@ -19,7 +19,7 @@ export class AdminService extends Logger {
     private lcdService: LcdService,
     private websocketGateway: WebsocketGateway,
     private doorService: DoorService,
-    private logsService: LogsService,
+    private logs: LogsService,
   ) {
     super();
   }
@@ -44,7 +44,7 @@ export class AdminService extends Logger {
     this.lcdService.write(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
     this.doorService.onGameStart();
 
-    this.logsService.log('game created');
+    this.logs.log('game created');
 
     return {
       message: 'game created',
@@ -65,7 +65,7 @@ export class AdminService extends Logger {
     }
 
     this.websocketGateway.sendEvent('hint', body);
-    this.logsService.log(`hint sent: '${body}'`);
+    this.logs.log(`hint sent: '${body}'`);
 
     return {
       message: 'ok',
