@@ -19,4 +19,9 @@ export class AdminController {
   openDoor() {
     return this.adminService.openDoor();
   }
+
+  @Post('team')
+  setTeam(@Body() body) {
+    return this.adminService.setTeam(body);
+  }
 }

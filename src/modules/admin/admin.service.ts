@@ -1,6 +1,6 @@
 import { Injectable, CACHE_MANAGER, Inject, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import Game from '@interfaces/game';
+import { Game } from '@interfaces/game';
 import { v4 as uuidv4 } from 'uuid';
 import generateIp from '@utils/ip';
 import config from '@config/config';
@@ -9,6 +9,7 @@ import { CountDown } from '@modules/countdown/countdown';
 import { WebsocketGateway } from '@modules/websocket/websocket.gateway';
 import { DoorService } from '@modules/door/door.service';
 import { LogsService } from '@modules/logs/logs.service';
+import getRandomTeamName from '@utils/teams';
 
 @Injectable()
 export class AdminService extends Logger {
@@ -34,6 +35,9 @@ export class AdminService extends Logger {
       id: uuidv4(),
       ip: generateIp(),
       code: Math.floor(1000 + Math.random() * 9000),
+      team: {
+        name: getRandomTeamName(),
+      },
       time_remaining: new CountDown(config.game.duration, (duration: number) => {
         this.websocketGateway.sendEvent('remaining', duration);
       }),
@@ -42,6 +46,7 @@ export class AdminService extends Logger {
 
     this.cacheManager.set('game', this.game);
     this.lcdService.write(`[het IP adres is]${this.game.ip}`); //[ represents the first line, ] represents the secund line
+    this.websocketGateway.sendEvent('team', this.game.team);
     this.doorService.onGameStart();
 
     this.logs.log('game created');
@@ -78,5 +83,26 @@ export class AdminService extends Logger {
     }
 
     this.doorService.openDoor();
+    this.logs.log('door opened');
+  }
+
+  setTeam(req) {
+    const { name } = req;
+
+    if (!this.game) {
+      throw new HttpException("there's currently no game running", HttpStatus.NOT_FOUND);
+    }
+
+    if (!name) {
+      throw new HttpException('team name missing', HttpStatus.BAD_REQUEST);
+    }
+
+    this.websocketGateway.sendEvent('team', name);
+    this.game.team.name = name;
+    this.logs.log(`team: '${this.game.team.name}'`);
+
+    return {
+      message: 'ok',
+    };
   }
 }
