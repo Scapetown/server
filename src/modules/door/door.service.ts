@@ -1,6 +1,6 @@
 import { Injectable, CACHE_MANAGER, Inject, Logger } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import { Game } from '@interfaces/game';
+import { IGame } from '@interfaces/game';
 import { ArdruinoDoorService } from '@modules/ardruinoDoor/ardruinoDoor.service';
 import { LogsService } from '@modules/logs/logs.service';
 
@@ -54,7 +54,7 @@ export class DoorService extends Logger {
   }
 
   async checkCode(code: string) {
-    const game: Game = await this.cacheManager.get('game');
+    const game: IGame = await this.cacheManager.get('game');
     const ch = code[0];
 
     if (!game) {

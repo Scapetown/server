@@ -1,6 +1,6 @@
 import { Injectable, CACHE_MANAGER, Inject, Logger, HttpException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import { Game } from '@interfaces/game';
+import { IGame } from '@interfaces/game';
 import { LogsService } from '@modules/logs/logs.service';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class TerminalService extends Logger {
 
   async checkCommand(body) {
     const { ip } = body;
-    const game: Game = await this.cacheManager.get('game');
+    const game: IGame = await this.cacheManager.get('game');
 
     if (game) {
       if (game.ip === ip) {
