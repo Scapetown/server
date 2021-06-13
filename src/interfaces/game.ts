@@ -1,12 +1,10 @@
-export interface Game {
-  id?: string;
-  ip?: string;
-  code?: number;
-  team: Team;
-  time_remaining?: any;
-  running?: true;
+export interface IGame {
+  readonly ip: string;
+  readonly code: number;
+  team: ITeam;
+  remaining: number;
 }
 
-export interface Team {
+export interface ITeam {
   name: string;
-} 
+}
