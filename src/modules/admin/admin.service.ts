@@ -28,7 +28,7 @@ export class AdminService extends Logger {
       this.countdown.stop();
     }
 
-    this.game.newGame();
+    this.game.create();
     this.cacheManager.set('game', this.game);
 
     this.countdown = new CountDown(this.game.remaining, (duration: number) => {

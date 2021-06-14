@@ -18,7 +18,7 @@ export class Game implements IGame {
     this.remaining = 0;
   }
 
-  newGame() {
+  create() {
     this.ip = generateIp();
     this.code = Math.floor(1000 + Math.random() * 9000);
     this.team.name = getRandomTeamName();
