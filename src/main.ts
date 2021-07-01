@@ -4,6 +4,7 @@ import { ResponseInterceptor } from '@filters/response.interceptor';
 
 import config from '@config/config';
 import { Logger } from '@utils/logger';
+import { HttpExceptionFilter } from '@filters/http-exception.filter';
 
 async function bootstrap() {
   const logger = new Logger('server');
@@ -15,6 +16,7 @@ async function bootstrap() {
 
   app.enableCors();
   app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalFilters(new HttpExceptionFilter());
   app.setGlobalPrefix(config.server.prefix);
   await app.listen(config.server.port);
 }
