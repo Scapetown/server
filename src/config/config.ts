@@ -8,6 +8,7 @@ const SERVER_NAME = process.env.SERVER_NAME;
 
 const SERVER_DOOR_COM = process.env.SERVER_DOOR_COM;
 const SERVER_LCD_COM = process.env.SERVER_LCD_COM;
+const SERVER_MPLAYER_PATH = process.env.SERVER_MPLAYER_PATH;
 
 const SERVER = {
   hostname: SERVER_HOSTNAME,
@@ -16,6 +17,7 @@ const SERVER = {
   name: SERVER_NAME,
   doorCom: SERVER_DOOR_COM,
   lcdCom: SERVER_LCD_COM,
+  mplayer_path: SERVER_MPLAYER_PATH,
 };
 
 const AUTHOR = process.env.AUTHOR;
