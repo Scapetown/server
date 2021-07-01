@@ -2,10 +2,15 @@ import { Injectable, CACHE_MANAGER, Inject, Logger, HttpException } from '@nestj
 import { Cache } from 'cache-manager';
 import { IGame } from '@interfaces/game';
 import { LogsService } from '@modules/logs/logs.service';
+import { SoundService } from '@modules/sound/sound.service';
 
 @Injectable()
 export class TerminalService extends Logger {
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache, private logs: LogsService) {
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private logs: LogsService,
+    private soundService: SoundService,
+  ) {
     super();
   }
 
@@ -16,14 +21,17 @@ export class TerminalService extends Logger {
     if (game) {
       if (game.ip === ip) {
         this.logs.log('ip correct');
+
         return {
           code: game.code,
         };
       }
 
       this.logs.log(`ip incorrect got: ${ip} expected: ${game.ip}`);
+      this.soundService.play('incorrect.wav');
+
       return {
-        message: 'ip incorrect',
+        code: 'ip incorrect',
       };
     }
 
