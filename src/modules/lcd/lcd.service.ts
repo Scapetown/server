@@ -1,3 +1,4 @@
+import config from '@config/config';
 import { Injectable, Logger } from '@nestjs/common';
 import SerialPort from 'serialport';
 
@@ -7,7 +8,7 @@ export class LcdService extends Logger {
 
   constructor() {
     super();
-    this.serialport = new SerialPort('COM4');
+    this.serialport = new SerialPort(config.server.lcdCom);
   }
 
   write(msg: string) {

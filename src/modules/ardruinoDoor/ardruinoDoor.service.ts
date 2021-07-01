@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import SerialPort from 'serialport';
 import Readline from '@serialport/parser-readline';
+import config from '@config/config';
 
 @Injectable()
 export class ArdruinoDoorService extends Logger {
@@ -12,7 +13,7 @@ export class ArdruinoDoorService extends Logger {
     super();
     this.startLog = true;
 
-    this.serialport = new SerialPort('COM3');
+    this.serialport = new SerialPort(config.server.doorCom);
 
     this.parser = new Readline();
     this.serialport.pipe(this.parser);

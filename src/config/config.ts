@@ -6,11 +6,16 @@ const SERVER_PORT = process.env.SERVER_PORT || 8000;
 const SERVER_PREFIX = process.env.SERVER_PREFIX || 'api';
 const SERVER_NAME = process.env.SERVER_NAME;
 
+const SERVER_DOOR_COM = process.env.SERVER_DOOR_COM;
+const SERVER_LCD_COM = process.env.SERVER_LCD_COM;
+
 const SERVER = {
   hostname: SERVER_HOSTNAME,
   port: SERVER_PORT,
   prefix: SERVER_PREFIX,
   name: SERVER_NAME,
+  doorCom: SERVER_DOOR_COM,
+  lcdCom: SERVER_LCD_COM,
 };
 
 const AUTHOR = process.env.AUTHOR;
